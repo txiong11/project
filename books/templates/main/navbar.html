@@ -1,0 +1,68 @@
+{% url 'home-view' as path_to_home %}
+{% url 'posts:main-post-view' as path_to_posts %}
+{% url 'profiles:all-profiles-view' as path_to_all_profiles %}
+{% url 'profiles:my-invites-view' as path_to_my_invites %}
+{% url 'profiles:invite-profiles-view' as path_to_invites %}
+{% url 'profiles:my-profile-view' as path_to_my_profile %}
+
+<div class="ui inverted menu nav mb-7">
+  <div class="ui container">
+
+    <img src="/media/logo.png" alt="logo">
+
+    <a href="{{path_to_home}}" class="{% if request.path == path_to_home %}active{% endif %} item">
+        <h3>MyBook</h3>
+    </a>
+    
+    <div class="item">
+        <form action="" method="GET">
+            <div class="ui action left icon input">
+                <input class="prompt" type="text" name='q' placeholder="name of a friend...">
+                <i class="search icon"></i>
+                <button type='submit' class="ui button">Search</buttondjango-admin startproject mysite>
+            </div>
+        </form>
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <a href="{{path_to_posts}}" class="{% if request.path == path_to_posts %}active{% endif %} item">
+       <h3>My Posts</h3> 
+    </a>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <a href="{{path_to_all_profiles}}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item">
+        <h3>All Profiles</h3>
+    </a>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <a href="{{path_to_my_invites}}" class="{% if request.path == path_to_my_invites %}active{% endif %} item">
+        <h4>Friend Request</h4> &nbsp; <div class="ui purple horizontal label">{{invites_num}}</div>
+    </a>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <a href="{{path_to_invites}}" class="{% if request.path == path_to_invites %}active{% endif %} item">
+        <h3>Send Invites</h3>
+    </a>
+    {% endif %}
+
+    <div class="right menu">
+        {% if request.user.is_authenticated %}
+            <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} item">
+                <img src={{picture.url}} class="ui avatar image">&nbsp;
+                 {{ request.user }}
+            </a>
+
+            <a href="{%url 'account_logout'%}" class="ui item">
+                Logout
+            </a>
+        {% else %}
+            <a href="{%url 'account_login'%}" class="ui item">
+                Login
+            </a>
+        {% endif %}
+    </div>
+  </div>
+</div>
